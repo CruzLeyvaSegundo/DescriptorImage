@@ -1,0 +1,6 @@
+https://github.com/ESIR2-IN-promo2017/local-textures-descriptors
+https://github.com/mihaipitu/ImageFeatures
+https://github.com/bytefish/opencv/tree/master/lbp
+https://github.com/bytefish/facerec
+https://github.com/bytefish/libfacerec/blob/master/src/facerec.cpp
+http://fralbe.com/2012/05/13/matlab-crear-carpetas-guardar-archivos-txt-figuras-fig-workspace/
