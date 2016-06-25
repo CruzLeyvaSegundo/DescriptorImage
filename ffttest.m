@@ -21,13 +21,11 @@ figure, imshow(S2,[]);
 %disp(S2);
 cooX = Width/2;
 cooY = Heigth/2;
-descriptore = [];
-k=1;
+descriptore(1)=1;
+k=2;
 range = 10;
 for i=cooY-range: cooY+range-1
     for j=cooX-range: cooX+range-1
-      disp(i);
-      disp(j);
        descriptore(k) = S2(i,j);
        k = k+1;
     end

@@ -1,6 +1,3 @@
-% 
-% function return_value = name_of_function( parameters ) 
-% 
 % Author:   
 % Date:     
 % Partner:  
@@ -13,8 +10,7 @@
 % 
 % Parameters : What values/types are expected as input? 
 % 
-% Return     : What comes out of the function? 
-% 
+% Return     : What comes out of the function?  
 
   
 function descFouri( ) 
@@ -25,10 +21,10 @@ function descFouri( )
 
     for k=1:nImg
         waitbar(k/nImg, wb);
-        nameImg=strcat('.\Img\',num2str(k),'.jpg');
+        nameImg=strcat('..\Img\',num2str(k),'.jpg');
         img_RGB = imread(nameImg);
         img_gray=rgb2gray(img_RGB);
-        fourier_descriptors  = [fourier_descriptors; createDescFouImg(img_gray)];
+        fourier_descriptors  = [fourier_descriptors; createDescFouImg(img_gray,k)];
 
     end
     %disp(fourier_descriptors);
