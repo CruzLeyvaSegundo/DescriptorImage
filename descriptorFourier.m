@@ -3,17 +3,16 @@
 % Partner:  
 % Course:   
 % 
-% Function   : Name of Function 
+% Function   : descriptorFourier
 % 
-% Purpose    : What task does the function accomplish 
-%              or what does it compute 
+% Purpose    : creates the file "baseFourier.txt" that contains the Fourier Descriptors of 10k images
 % 
-% Parameters : What values/types are expected as input? 
+% Parameters : nothing
 % 
-% Return     : What comes out of the function?  
+% Return     : nothing
 
   
-function descFouri( ) 
+function descriptorFourier( ) 
     fileID = fopen('baseFourier.txt','wt');
     nImg=5;
     fourier_descriptors=[];
