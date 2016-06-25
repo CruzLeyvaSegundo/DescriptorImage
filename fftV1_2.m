@@ -1,3 +1,4 @@
+%OBTAIN THE DFT OF AN IMAGE V1
 nameImg=strcat('.\Img\8.jpg');
 img_RGB = imread(nameImg);
 img_gray=rgb2gray(img_RGB);
@@ -13,8 +14,8 @@ S2 = log(1+S);%para mejorar el rango dinamico de visualizacao
 %so we can better see the transform.
 % +1 since log(0) is undefined
 imshow(S2,[]);
-
-
+%====================================================
+%OBTAIN THE DFT OF AN IMAGE V2
 nameImg=strcat('.\Img\10.jpg');
 img = imread(nameImg);
 imagesc(img)
