@@ -1,19 +1,18 @@
 % 
-% function return_value = name_of_function( parameters ) 
 % 
 % Author:   
 % Date:     
 % Partner:  
-% Course:   
+% Course:   PI
 % 
-% Function   : Name of Function 
+% Function   : createDescFouImg
 % 
-% Purpose    : What task does the function accomplish 
-%              or what does it compute 
+% Purpose    : Obtain the fourier descriptor of an image
+%              for Image analysis, especifically Characterising and recognising the shapes of object
 % 
-% Parameters : What values/types are expected as input? 
+% Parameters : the image in gray_scale AND the index of the image
 % 
-% Return     : What comes out of the function? 
+% Return     : a vector of 401 positions([1]:index [2-401]:descriptor_information )
 % 
 
  
