@@ -15,7 +15,7 @@
 % 
 
  
-function descriptore = createDescFouImg( Imagem, nroImg ) 
+function descriptore = createDescFouImg( Imagem ) 
  
 img = imresize(Imagem, [400 400]);
 
@@ -35,8 +35,8 @@ S2 = log(1+S);%para mejorar el rango dinamico de visualizacao
 %disp(S2);
 cooX = Width/2;
 cooY = Heigth/2;
-descriptore(1)=nroImg;
-k=2;
+descriptore=zeros(1,400);
+k=1;
 range = 10;
 for i=cooY-range: cooY+range-1
     for j=cooX-range: cooX+range-1

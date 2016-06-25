@@ -1,8 +1,9 @@
 fileID = fopen('baseDatosLBP.txt','wt');
-fileRepuesto = fopen('baseRepuesto.txt','wt');
-nImg=30;
+% fileRepuesto = fopen('baseRepuesto.txt','wt');
+nImg=20;
 lbpOriginal=zeros(nImg,59);
 lbpNormalizado=zeros(nImg,59);
+descriptorLBP=zeros(1,59);
 wb = waitbar(0,'Creando base de datos(Descriptores de imagenes)');
 for k=1:nImg
     waitbar(k/nImg, wb);
@@ -11,9 +12,9 @@ for k=1:nImg
     img_gray=rgb2gray(img_RGB);
     descriptorLBP=hallarVectorLBP(img_gray); %Tamaño 59, '1:59': lo 59 rotulos
     lbpOriginal(k,:)=descriptorLBP;
-    fprintf(fileRepuesto,'%d ',k);
-    fprintf(fileRepuesto,'%d ',descriptorLBP);
-    fprintf(fileRepuesto,'\n');
+%     fprintf(fileRepuesto,'%d ',k);
+%     fprintf(fileRepuesto,'%d ',descriptorLBP);
+%     fprintf(fileRepuesto,'\n');
     lbpNormalizado(k,:)=descriptorLBP./norm(descriptorLBP);
 end
 
@@ -47,5 +48,5 @@ fprintf(fileID,'%d ',registroIndex(1,:));
 fprintf('\n');
 verificarRanking(lbpOrdenado);
 close(wb);
-fclose(fileRepuesto);
+% fclose(fileRepuesto);
 fclose(fileID);
