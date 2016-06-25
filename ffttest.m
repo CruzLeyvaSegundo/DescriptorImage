@@ -1,3 +1,18 @@
+% Author:   
+% Date:     
+% Partner:  
+% Course:   PI
+% 
+% Function   :
+% 
+% Purpose    : Obtain the fourier descriptor of an image
+%              for Image analysis, especifically Characterising and recognising the shapes of object
+% 
+% Parameters : 
+% 
+% Return     : a
+% 
+
 nameImg=strcat('..\Img\2.jpg');
 img_RGB = imread(nameImg);
 img_gray=rgb2gray(img_RGB);
