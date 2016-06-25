@@ -1,7 +1,7 @@
 fileID = fopen('baseDatosLBP.txt','wt');
 rotuloLBP=[0 1 2 3 4 6 7 8 12 14 15 16 24 28 30 31 32 48 56 60 62 63 64 96 112 120 124 126 127 128 129 131 135 143 159 191 192 193 195 199 207 223 224 225 227 231 239 240 241 243 247 248 249 251 252 253 254 255];
 [a,nRotulos]=size(rotuloLBP);
-nImg=10;
+nImg=30;
 lbpOriginal=zeros(nImg,59);
 lbpNormalizado=zeros(nImg,59);
 wb = waitbar(0,'Creando base de datos(Descriptores de imagenes)');
@@ -65,20 +65,22 @@ query=query./norm(query);
 for i=1:nImg
     simCosenoLBP(i,1)=i;
     simCosenoLBP(i,2)=simCoseno(query,lbpNormalizado(i,:));
-%     fprintf('%8.3f ',simCosenoLBP(i,:));
-%     fprintf('\n');
+    fprintf('%8.3f ',simCosenoLBP(i,:));
+    fprintf('\n');
 end
+fprintf('+++++++++++++++++++++++++++\n');
 %Se ordenan los ranking
 lbpOrdenado=crearRanking(simCosenoLBP,lbpOriginal);
-% simCosenoLBP=burbuja(simCosenoLBP);
+simCosenoLBP=burbuja(simCosenoLBP);
 %Se guardan los ranking generados
 for i=1:nImg
-%     fprintf('\n');
-%     fprintf('%8.3f ',simCosenoLBP(i,:));
-%     fprintf('\n');
+    fprintf('%8.3f ',simCosenoLBP(end-i+1,:));
+    fprintf('\n');
     fprintf(fileID,'%d ',lbpOrdenado(i,1));
     fprintf(fileID,'%d ',lbpOrdenado(i,(2:end)));
     fprintf(fileID,'\n');
 end
+fprintf('\n');
+verificarRanking(lbpOrdenado);
 close(wb);
 fclose(fileID);
