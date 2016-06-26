@@ -15,10 +15,11 @@
 % 
 
  
-function descriptore = createDescFouImg( Imagem ) 
- 
-img = imresize(Imagem, [400 400]);
-
+function descriptore = createDescFouImg( ImagemGray ) 
+[n m]=size(ImagemGray); 
+if(n~=300)
+   img=ImagemGray';
+end
 % figure, imshow(img,[]);
 
 F= fft2(img);
