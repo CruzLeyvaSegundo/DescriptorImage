@@ -43,15 +43,17 @@ registroIndexFourier=zeros(1,nImg);
 registroIndexFourier(1,:)=fscanf(fileID2,'%d',nImg);
 close(wb);
 %%%%%%%%%%%%%%%%%%%%%%%%%%% busqueda %%%%%%%%%%%%%%%%%%%%%%%%%%
-img=820;  %Imagen que se utilizara para la query
+img=3655;  %Imagen que se utilizara para la query
 k=5; %Numero de coincidencias a reportar
-op=2; %Descriptor escogido - Si op=1 entonces se usa fourier Sino se utiliza LBP
+op=1; %Descriptor escogido - Si op=1 entonces se usa fourier Sino se utiliza LBP
 muestra=4000; %Tamano de muestra a analizar
 nameImg=strcat(strcat('..\Img\',num2str(img),'.jpg'));
 img_RGB = imread(nameImg);
 img_gray=rgb2gray(img_RGB);
-img_gray=imresize(img_gray, [400 400]);
-
+[n m]=size(img_gray);
+if(n~=300)
+    img_gray=img_gray';
+end
 if(op==1) %%FOURIER
     descriptorQuery=createDescFouImg(img_gray); %Tamaño 401,'1': nombreImg '2:401': los 400 puntos del espectro tomados    
     registroIndex=registroIndexFourier;
