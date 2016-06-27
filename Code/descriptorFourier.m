@@ -23,8 +23,7 @@ function descriptorFourier( )
         nameImg=strcat('..\Img\',num2str(k),'.jpg');
         img_RGB = imread(nameImg);
         img_gray=rgb2gray(img_RGB);
-        img_borde=edge(img_gray,'canny');
-        descFurier= createDescFouImg(img_borde);
+        descFurier= createDescFouImg(img_gray);
         fourier_descriptors(k,:)=descFurier;  
         DescFurierNormalizado(k,:)=descFurier./norm(descFurier);
     end
