@@ -17,7 +17,7 @@ function descriptorFourier( )
     nImg=10000;
     fourier_descriptors=zeros(nImg,400);
     DescFurierNormalizado=zeros(nImg,400);
-    wb = waitbar(0,'Creando base de datos(Descriptores de imagenes)');
+    wb = waitbar(0,'Criação de banco de dados (imagens Descritores)');
     for k=1:nImg
         waitbar(k/nImg, wb);
         nameImg=strcat('..\Img\',num2str(k),'.jpg');
@@ -32,7 +32,7 @@ function descriptorFourier( )
     %lbpOrdenado Aca se almacena el ranking de los descritores con respecto a la query
     query=ones(1,400);
     query=query./norm(query);
-    wb = waitbar(0,'Calculando similaridad entre los descriptores');
+    wb = waitbar(0,'Calculando semelhança entre descritores');
     %Calculo de la similitud de coseno de los vectores con respecto a una qeury
     for i=1:nImg
         waitbar(i/nImg, wb);
@@ -44,7 +44,7 @@ function descriptorFourier( )
     %Se ordenan los ranking
     FurierOrdenado=crearRanking(simCosenoFurier,fourier_descriptors,2);
     
-    wb = waitbar(0,'Guardando ranking Furier...');
+    wb = waitbar(0,'Salvando classificação Fourier ...');
     registroIndex=zeros(1,nImg);
     %SE GUARDA EL RANKING DE LOS VECTORES LBP
     for i=1:nImg

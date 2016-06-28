@@ -19,7 +19,7 @@ fileID2 = fopen('..\BaseDados\baseFourier.txt','r');
 nImg=10000;
 lbpOrdenado=zeros(nImg,60);
 fourierOrdenado=zeros(nImg,401);
-wb = waitbar(0,'Cargando base de datos(Descriptores de imagenes)');
+wb = waitbar(0,'Carregando banco de dados (imagens Descritores)');
 for i=1:nImg
     waitbar(i/nImg, wb);
     %%LBP
@@ -70,14 +70,11 @@ while(bandEntrada)
         elseif(strcmpi((entrada(r)),'lbp')==1)
             op=2;
         end
-%         img=5222; 
-%         op=1; 
-        muestra=9800; %Tamano de muestra a analizar
+        muestra=4000; %Tamano de muestra a analizar
         nameImg=strcat('..\Img\',num2str(img),'.jpg');
         img_RGB = imread(nameImg);
         img_gray=rgb2gray(img_RGB);
         [n m]=size(img_gray);               
-        %img_gray=imresize(400,400);
         if(op==1) %%FOURIER
             img_gray = imresize(img_gray,[400 400]);
             descriptorQuery=createDescFouImg(img_gray); %Tamaño 401,'1': nombreImg '2:401': los 400 puntos del espectro tomados    
@@ -85,10 +82,7 @@ while(bandEntrada)
             indiceQuery=registroIndexFourier(img);
             descriptoresOrdenados=fourierOrdenado;
             nRotulo=401;
-        elseif(op==2)%%LBP
-%             if(n~=300)
-%                 img_gray=img_gray';
-%             end              
+        elseif(op==2)%%LBP 
             descriptorQuery=hallarVectorLBP(img_gray); %Tamaño 60,'1': nombreImg '2:60': lo 59 rotulos
             registroIndex=registroIndexLBP;
             indiceQuery=registroIndexLBP(img);
@@ -101,7 +95,7 @@ while(bandEntrada)
         cantActual=1;
         anterior=indiceQuery-1;
         posterior=indiceQuery+1;
-        wb = waitbar(0,'Obteniendo muestra de imagenes');
+        wb = waitbar(0,'Obtenção de imagens de amostra');
         while(cantActual<=muestra)
              waitbar(cantActual/muestra, wb);
             if(anterior>=1&&cantActual<=muestra)
@@ -117,7 +111,7 @@ while(bandEntrada)
         end
         close(wb);
 
-        wb = waitbar(0,'Calculando similaridad de la query con las muestras');
+        wb = waitbar(0,'Calculando semelhança da consulta com amostras');
         simLBP=zeros(muestra,2);
         for j=1:muestra
             waitbar(j/muestra, wb);
@@ -141,10 +135,10 @@ while(bandEntrada)
         for i=1:k
             if(op==1)%fourier
                 salida(i,:)=descriptoresOrdenados(registroIndex(ranking(i,1)),:);
-                fprintf('Imagen %d parecida a %d con similitud %.4f\n',img,salida(i,1),ranking(i,2));
+                fprintf('Imagem %d semelhante a %d como similaridade %.4f\n',img,salida(i,1),ranking(i,2));
             elseif(op==2)%%LBP
                 salida(i,:)=descriptoresOrdenados(registroIndex(ranking(muestra-i+1,1)),:);   
-                fprintf('Imagen %d parecida a %d con similitud %.4f\n',img,salida(i,1),ranking(muestra-i+1,2));
+                fprintf('Imagem %d semelhante a %d como similaridade %.4f\n',img,salida(i,1),ranking(muestra-i+1,2));
             end
             nameImg=strcat('..\Img\',num2str(salida(i,1)),'.jpg');
             img_Salida = imread(nameImg);

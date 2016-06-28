@@ -17,9 +17,9 @@ function [ descriptorLBP ] = hallarVectorLBP( img_gray )
     rotuloLBP=[0 1 2 3 4 6 7 8 12 14 15 16 24 28 30 31 32 48 56 60 62 63 64 96 112 120 124 126 127 128 129 131 135 143 159 191 192 193 195 199 207 223 224 225 227 231 239 240 241 243 247 248 249 251 252 253 254 255];
     [a,nRotulos]=size(rotuloLBP);
     [n,m]=size(img_gray);
-%     if(n~=300)
-%        img_gray=img_gray';
-%     end
+    if(n~=300)
+       img_gray=img_gray';
+    end
     descriptorLBP=zeros(1,nRotulos+1); %Tamaño 59, '1:59': lo 59 rotulos
     for i=2:n-1
         for j=2:m-1
@@ -63,4 +63,3 @@ function [ descriptorLBP ] = hallarVectorLBP( img_gray )
         end
     end
 end
-

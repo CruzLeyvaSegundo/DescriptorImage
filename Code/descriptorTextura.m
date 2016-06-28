@@ -17,7 +17,7 @@ function descriptorTextura( )
     nImg=10;
     lbpOriginal=zeros(nImg,59);
     lbpNormalizado=zeros(nImg,59);
-    wb = waitbar(0,'Creando base de datos(Descriptores de imagenes)');
+    wb = waitbar(0,'Criação de banco de dados (imagens Descritores)');
     for k=1:nImg
         waitbar(k/nImg, wb);
         nameImg=strcat('..\Img\',num2str(k),'.jpg');
@@ -32,7 +32,7 @@ function descriptorTextura( )
     %lbpOrdenado Aca se almacena el ranking de los descritores con respecto a la query
     query=ones(1,59);
     query=query./norm(query);
-    wb = waitbar(0,'Calculando similaridad entre los descriptores');
+    wb = waitbar(0,'Calculando semelhança entre descritores');
     %Calculo de la similitud de coseno de los vectores con respecto a una qeury
     for i=1:nImg
         waitbar(i/nImg, wb);
@@ -44,7 +44,7 @@ function descriptorTextura( )
     %Se ordenan los ranking
     lbpOrdenado=crearRanking(simCosenoLBP,lbpOriginal,1);
     
-    wb = waitbar(0,'Guardando ranking LBP');
+    wb = waitbar(0,'Salvando classificação LBP...');
     registroIndex=zeros(1,nImg);
     %SE GUARDA EL RANKING DE LOS VECTORES LBP
     for i=1:nImg
