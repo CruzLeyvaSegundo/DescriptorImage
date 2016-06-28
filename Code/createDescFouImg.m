@@ -38,8 +38,8 @@ I_pad = padarray(I, [floor(N/2) floor(N/2)]);
 C = im2col(I_pad, [N N], 'sliding');
 C_filter = sum(bsxfun(@times, C, h), 1);
 out = col2im(C_filter, [N N], size(I_pad), 'sliding');
-img = edge(out,'canny');
-% img = im2bw(img,0.48);
+%img = edge(out,'canny');
+img = im2bw(out,0.5);
 %figure, imshow(img,[]);;
 F= fft2(img);
 

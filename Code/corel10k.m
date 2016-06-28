@@ -59,7 +59,7 @@ while(bandEntrada)
         r=2;
         if(minP==2)
             k=5; 
-        elseif(minP==3)
+        elseif(minP>=3)
         k=str2double(entrada(r));%Numero de coincidencias a reportar
         k=round(k);
         r=r+1;
