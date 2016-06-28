@@ -42,7 +42,7 @@ function descriptorTextura( )
     close(wb);
 %     fprintf('+++++++++++++++++++++++++++\n');
     %Se ordenan los ranking
-    lbpOrdenado=crearRanking(simCosenoLBP,lbpOriginal);
+    lbpOrdenado=crearRanking(simCosenoLBP,lbpOriginal,1);
     
     wb = waitbar(0,'Guardando ranking LBP');
     registroIndex=zeros(1,nImg);

@@ -15,7 +15,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%% LBP y FOURIER %%%%%%%%%%%%%%%%%%%%%%%%%%
 %Obtener el Path de la carpeta Actual
 fileID = fopen('..\BaseDados\baseDatosLBP.txt','r');
-fileID2 = fopen('..\BaseDados\baseFourier.txt','r');
+fileID2 = fopen('..\BaseDados\baseFourier2.txt','r');
 nImg=10000;
 lbpOrdenado=zeros(nImg,60);
 fourierOrdenado=zeros(nImg,401);
@@ -72,7 +72,7 @@ while(bandEntrada)
         end
 %         img=5222; 
 %         op=1; 
-        muestra=4000; %Tamano de muestra a analizar
+        muestra=9800; %Tamano de muestra a analizar
         nameImg=strcat('..\Img\',num2str(img),'.jpg');
         img_RGB = imread(nameImg);
         img_gray=rgb2gray(img_RGB);
@@ -122,7 +122,11 @@ while(bandEntrada)
             waitbar(j/muestra, wb);
             p=descriptoresMuestra(j,(2:end));
             simLBP(j,1)=descriptoresMuestra(j,1);
-            simLBP(j,2)=simCoseno(descriptorQuery,p);      
+            if(op==1)%fourier
+                simLBP(j,2)=distEuclidiana(descriptorQuery,p);  
+            elseif(op==2)%%LBP
+                simLBP(j,2)=simCoseno(descriptorQuery,p);      
+            end
         end
         close(wb);
 
@@ -134,11 +138,16 @@ while(bandEntrada)
         figure,imshow(img_Salida),title('QUERY');
         salida=zeros(k,nRotulo);
         for i=1:k
-            salida(i,:)=descriptoresOrdenados(registroIndex(ranking(muestra-i+1,1)),:);
+            if(op==1)%fourier
+                salida(i,:)=descriptoresOrdenados(registroIndex(ranking(i,1)),:);
+                fprintf('Imagen %d parecida a %d con similitud %.4f\n',img,salida(i,1),ranking(i,2));
+            elseif(op==2)%%LBP
+                salida(i,:)=descriptoresOrdenados(registroIndex(ranking(muestra-i+1,1)),:);   
+                fprintf('Imagen %d parecida a %d con similitud %.4f\n',img,salida(i,1),ranking(muestra-i+1,2));
+            end
             nameImg=strcat('..\Img\',num2str(salida(i,1)),'.jpg');
             img_Salida = imread(nameImg);
             figure,imshow(img_Salida),title(strcat('k-esimo: ',num2str(i)));
-            fprintf('Imagen %d parecida a %d con similitud %.4f\n',img,salida(i,1),ranking(muestra-i+1,2));
         end
     end
 end

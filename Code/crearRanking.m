@@ -12,7 +12,7 @@
 % Parameters : simCosenos(cosine similarity in base of query) , descLBP(It contains all descriptors)
 % 
 % Return     : lbpOrdenado(It contains all semi-ordered descriptors)
-function [ lbpOrdenado ] = crearRanking(simCosenos,descLBP)
+function [ lbpOrdenado ] = crearRanking(simCosenos,descLBP,op)
     n=size(simCosenos);
     m=size(descLBP);
     lbpOrdenado=zeros(n(1),m(2)+1);
@@ -30,15 +30,24 @@ function [ lbpOrdenado ] = crearRanking(simCosenos,descLBP)
     for j=2:n(1)
         p=lbpOrdenado(j,(2:end));
         vecAux(k,1)=lbpOrdenado(j,1);
-        vecAux(k,2)=simCoseno(q,p);    
+        if(op==2)
+            vecAux(k,2)=distEuclidiana(q,p);   
+        elseif(op==1)
+            vecAux(k,2)=simCoseno(q,p);  
+        end
         k=k+1;
     end
 
     ranking2=heapsort(vecAux);   
     k=1;
-    for j=2:n(1)
-        matrizAux(k,1)=ranking2(n(1)-j+1,1);
-        matrizAux(k,(2:end))=descLBP(matrizAux(k,1),:);
+    for j=1:n(1)-1
+        if(op==2)
+            matrizAux(k,1)=ranking2(j,1);
+            matrizAux(k,(2:end))=descLBP(matrizAux(k,1),:);
+        elseif(op==1)
+            matrizAux(k,1)=ranking2(n(1)-j,1);
+            matrizAux(k,(2:end))=descLBP(matrizAux(k,1),:);            
+        end
         k=k+1;
     end
     lbpOrdenado(2:n(1),:)=matrizAux;

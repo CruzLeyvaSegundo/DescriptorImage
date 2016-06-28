@@ -16,13 +16,14 @@
 % 
 function descriptore = createDescFouImg( ImagemGray ) 
 [n m]=size(ImagemGray); 
-img = ImagemGray;
-if(n~=300)
-   img=ImagemGray';
-end
+img = imresize(ImagemGray,[400 400]);
+% if(n~=300)
+%    img=ImagemGray';
+% end
 %tresholding image
-img = im2bw(img,0.3);
-% figure, imshow(img,[]);
+
+img = im2bw(img,0.5);
+figure, imshow(img,[]);;
 F= fft2(img);
 
 F2 = fftshift(F);%swap (Top-Left with Bottom-Right) (Top-Right with Bottom-Left)

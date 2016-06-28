@@ -42,7 +42,7 @@ function descriptorFourier( )
     close(wb);
 %     fprintf('+++++++++++++++++++++++++++\n');
     %Se ordenan los ranking
-    FurierOrdenado=crearRanking(simCosenoFurier,fourier_descriptors);
+    FurierOrdenado=crearRanking(simCosenoFurier,fourier_descriptors,2);
     
     wb = waitbar(0,'Guardando ranking Furier...');
     registroIndex=zeros(1,nImg);
