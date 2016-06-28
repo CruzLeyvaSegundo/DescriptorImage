@@ -14,7 +14,7 @@
 % Return     : nothing
 function descriptorTextura( ) 
     fileID = fopen('..\BaseDados\baseDatosLBP.txt','wt');
-    nImg=10000;
+    nImg=10;
     lbpOriginal=zeros(nImg,59);
     lbpNormalizado=zeros(nImg,59);
     wb = waitbar(0,'Creando base de datos(Descriptores de imagenes)');
@@ -58,6 +58,6 @@ function descriptorTextura( )
     %SE GUARDA EL REGISTRO DE INDEXACION DE LOS VECTORES LBP 
     fprintf(fileID,'%d ',registroIndex(1,:));
     fprintf('\n');
-    %verificarRanking(lbpOrdenado);
+    verificarRanking(lbpOrdenado);
     fclose(fileID);
 end

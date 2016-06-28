@@ -20,10 +20,27 @@ img = imresize(ImagemGray,[400 400]);
 % if(n~=300)
 %    img=ImagemGray';
 % end
-%tresholding image
+N = 5; %// Define size of Gaussian mask
+sigma = 2; %// Define sigma here
 
-img = im2bw(img,0.5);
-figure, imshow(img,[]);;
+%// Generate Gaussian mask
+ind = -floor(N/2) : floor(N/2);
+[X Y] = meshgrid(ind, ind);
+h = exp(-(X.^2 + Y.^2) / (2*sigma*sigma));
+h = h / sum(h(:));
+
+%// Convert filter into a column vector
+h = h(:);
+
+%// Filter our image
+I = im2double(img);
+I_pad = padarray(I, [floor(N/2) floor(N/2)]);
+C = im2col(I_pad, [N N], 'sliding');
+C_filter = sum(bsxfun(@times, C, h), 1);
+out = col2im(C_filter, [N N], size(I_pad), 'sliding');
+img = edge(out,'canny');
+% img = im2bw(img,0.48);
+%figure, imshow(img,[]);;
 F= fft2(img);
 
 F2 = fftshift(F);%swap (Top-Left with Bottom-Right) (Top-Right with Bottom-Left)

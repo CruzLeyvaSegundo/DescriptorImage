@@ -18,7 +18,7 @@ function [] = verificarRanking( vectorLBP )
         q=vectorLBP(i,(2:end));
         for j=i+1:n(1)
             p=vectorLBP(j,(2:end));
-            simCos=simCoseno(q,p);
+            simCos=distEuclidiana(q,p);
             fprintf('Similitud entre el img %d  y img %d es de %8.3f',vectorLBP(i,1),vectorLBP(j,1),simCos);
             fprintf('\n');
         end

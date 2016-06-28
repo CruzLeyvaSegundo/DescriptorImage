@@ -15,7 +15,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%% LBP y FOURIER %%%%%%%%%%%%%%%%%%%%%%%%%%
 %Obtener el Path de la carpeta Actual
 fileID = fopen('..\BaseDados\baseDatosLBP.txt','r');
-fileID2 = fopen('..\BaseDados\baseFourier2.txt','r');
+fileID2 = fopen('..\BaseDados\baseFourier.txt','r');
 nImg=10000;
 lbpOrdenado=zeros(nImg,60);
 fourierOrdenado=zeros(nImg,401);
@@ -76,18 +76,19 @@ while(bandEntrada)
         nameImg=strcat('..\Img\',num2str(img),'.jpg');
         img_RGB = imread(nameImg);
         img_gray=rgb2gray(img_RGB);
-        [n m]=size(img_gray);
-        if(n~=300)
-            img_gray=img_gray';
-        end                   
+        [n m]=size(img_gray);               
         %img_gray=imresize(400,400);
         if(op==1) %%FOURIER
+            img_gray = imresize(img_gray,[400 400]);
             descriptorQuery=createDescFouImg(img_gray); %Tamaño 401,'1': nombreImg '2:401': los 400 puntos del espectro tomados    
             registroIndex=registroIndexFourier;
             indiceQuery=registroIndexFourier(img);
             descriptoresOrdenados=fourierOrdenado;
             nRotulo=401;
         elseif(op==2)%%LBP
+%             if(n~=300)
+%                 img_gray=img_gray';
+%             end              
             descriptorQuery=hallarVectorLBP(img_gray); %Tamaño 60,'1': nombreImg '2:60': lo 59 rotulos
             registroIndex=registroIndexLBP;
             indiceQuery=registroIndexLBP(img);
