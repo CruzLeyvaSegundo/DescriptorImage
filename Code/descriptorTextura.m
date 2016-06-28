@@ -14,7 +14,7 @@
 % Return     : nothing
 function descriptorTextura( ) 
     fileID = fopen('..\BaseDados\baseDatosLBP.txt','wt');
-    nImg=10;
+    nImg=10000;
     lbpOriginal=zeros(nImg,59);
     lbpNormalizado=zeros(nImg,59);
     wb = waitbar(0,'Criação de banco de dados (imagens Descritores)');

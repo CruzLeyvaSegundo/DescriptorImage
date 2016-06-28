@@ -55,8 +55,7 @@ while(bandEntrada)
         entrada=cellstr(cadEntrada{1});
         [minP l]=size(entrada);
         
-        img=str2double(entrada(1));%Imagen que se utilizara para la query
-        img=round(img);
+        img=entrada(1);%Imagen que se utilizara para la query
         r=2;
         if(minP==2)
             k=5; 
@@ -70,29 +69,65 @@ while(bandEntrada)
         elseif(strcmpi((entrada(r)),'lbp')==1)
             op=2;
         end
-        muestra=4000; %Tamano de muestra a analizar
-        nameImg=strcat('..\Img\',num2str(img),'.jpg');
+        if(minP<4)
+            nameImg=strcat('..\',img,'.jpg');
+        else
+            nameImg=strcat('..\Img\',img,'.jpg');
+        end
+        nameImg=strjoin(nameImg);
         img_RGB = imread(nameImg);
         img_gray=rgb2gray(img_RGB);
-        [n m]=size(img_gray);               
+        [n m]=size(img_gray);           
+             
+        %img_gray=imresize(400,400);
         if(op==1) %%FOURIER
             img_gray = imresize(img_gray,[400 400]);
             descriptorQuery=createDescFouImg(img_gray); %Tamaño 401,'1': nombreImg '2:401': los 400 puntos del espectro tomados    
             registroIndex=registroIndexFourier;
-            indiceQuery=registroIndexFourier(img);
             descriptoresOrdenados=fourierOrdenado;
             nRotulo=401;
-        elseif(op==2)%%LBP 
+        elseif(op==2)%%LBP
             descriptorQuery=hallarVectorLBP(img_gray); %Tamaño 60,'1': nombreImg '2:60': lo 59 rotulos
             registroIndex=registroIndexLBP;
-            indiceQuery=registroIndexLBP(img);
             descriptoresOrdenados=lbpOrdenado;
             nRotulo=60;
         end
-        fprintf('index:  %d\n',indiceQuery)
+        
+        indiceQuery=5000;       
+        muestra=10000; %Tamano de muestra a analizar
+       %%%%%%%%%%%%
+        if(max(isletter(img))==0)
+           numImg=str2double(img);
+           numImg=round(numImg);
+           if(numImg>=1&&numImg<=10000)   
+                nameTest=strjoin(strcat('..\Img\',img,'.jpg'));
+                imTest=imread(nameTest);  
+                imTest_gray=rgb2gray(imTest);
+                if(op==1)
+                   descTest=createDescFouImg(imTest_gray);
+                   simV=distEuclidiana(descriptorQuery,descTest);
+                   if(simV==0)
+                       muestra=4000; %Tamano de muestra a analizar
+                       indiceQuery=registroIndex(numImg);
+                   end
+                elseif(op==2)
+                    descTest=hallarVectorLBP(imTest_gray);
+                    simV=simCoseno(descriptorQuery,descTest);
+                    
+                     fprintf('sim:  %.8f\n',simV)
+                    if((1-simV)<=0.0001)
+                        muestra=4000; %Tamano de muestra a analizar
+                        indiceQuery=registroIndexLBP(numImg);
+                    end
+                end                  
+           end 
+        end        
+        
+        fprintf('index:  %d con muestra: %d\n',indiceQuery,muestra)
 
         descriptoresMuestra=zeros(muestra,nRotulo);
-        cantActual=1;
+        descriptoresMuestra(1,:)=descriptoresOrdenados(indiceQuery,:);
+        cantActual=2;
         anterior=indiceQuery-1;
         posterior=indiceQuery+1;
         wb = waitbar(0,'Obtenção de imagens de amostra');
@@ -126,19 +161,18 @@ while(bandEntrada)
         close(wb);
 
         %ranking=burbuja(simLBP);
+        img=strjoin(img);
         ranking=heapsort(simLBP);
-
-        nameImg=strcat('..\Img\',num2str(img),'.jpg');
         img_Salida = imread(nameImg);
         figure,imshow(img_Salida),title('QUERY');
         salida=zeros(k,nRotulo);
         for i=1:k
             if(op==1)%fourier
                 salida(i,:)=descriptoresOrdenados(registroIndex(ranking(i,1)),:);
-                fprintf('Imagem %d semelhante a %d como similaridade %.4f\n',img,salida(i,1),ranking(i,2));
+                fprintf('Imagem %s semelhante a %d como similaridade %.4f\n',img,salida(i,1),ranking(i,2));
             elseif(op==2)%%LBP
                 salida(i,:)=descriptoresOrdenados(registroIndex(ranking(muestra-i+1,1)),:);   
-                fprintf('Imagem %d semelhante a %d como similaridade %.4f\n',img,salida(i,1),ranking(muestra-i+1,2));
+                fprintf('Imagem %s semelhante a %d como similaridade %.4f\n',img,salida(i,1),ranking(muestra-i+1,2));
             end
             nameImg=strcat('..\Img\',num2str(salida(i,1)),'.jpg');
             img_Salida = imread(nameImg);
